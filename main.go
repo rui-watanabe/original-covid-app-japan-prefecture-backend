@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"original-covid-app-japan-prefecture-backend/client"
+)
 
 func main() {
-	fmt.Println("hello world")
+	apiClient := client.NewClient(http.DefaultClient)
+	extraApiData := apiClient.FetchApiData()
+	fmt.Println(extraApiData)
 }
