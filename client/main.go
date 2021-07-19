@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -14,7 +15,7 @@ func NewClient(c *http.Client) Client {
 	return Client{c}
 }
 
-type ExtraApiData []struct {
+type ClientApiData []struct {
 	FacilityID   string `json:"facilityId"`
 	FacilityName string `json:"facilityName"`
 	ZipCode      string `json:"zipCode"`
@@ -31,11 +32,23 @@ type ExtraApiData []struct {
 	FacilityCode string `json:"facilityCode"`
 }
 
-func (c Client) FetchApiData() (extraApiData *ExtraApiData) {
-	req, _ := http.NewRequest("GET", "https://opendata.corona.go.jp/api/covid19DailySurvey", nil)
-	res, _ := c.Do(req)
+func (c Client) FetchClientApiData() (clientApiData ClientApiData) {
+	req, err := http.NewRequest("GET", "https://opendata.corona.go.jp/api/covid19DailySurvey", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res, err := c.Do(req)
+	if err != nil {
+		fmt.Println(err)
+	}
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	_ = json.Unmarshal(body, &extraApiData)
-	return extraApiData
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = json.Unmarshal(body, &clientApiData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return clientApiData
 }
