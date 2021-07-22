@@ -6,7 +6,7 @@ import (
 
 func MakeApiJson(clientApi client.ClientApiData) ExportApi {
 	exportApi := ExportApi{}
-	exportApi.Date = getExportApiDate(clientApi)
+	exportApi.Date = getExportApiDate(clientApi[0].SubmitDate)
 	exportApi.Data = getExportApiData(clientApi)
 	return exportApi
 }

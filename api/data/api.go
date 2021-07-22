@@ -1,13 +1,26 @@
 package data
 
 import (
+	"fmt"
 	"original-covid-app-japan-prefecture-backend/client"
 	"reflect"
+	"strconv"
 )
 
-func getExportApiDate(clientApi client.ClientApiData) string {
-	date := clientApi[0].SubmitDate
-	str := date[0:4] + "年" + date[5:7] + "月" + date[8:10] + "日"
+func getExportApiDate(date string) string {
+	y, err := strconv.Atoi(date[0:4])
+	if err != nil {
+		fmt.Println(err)
+	}
+	m, err := strconv.Atoi(date[5:7])
+	if err != nil {
+		fmt.Println(err)
+	}
+	d, err := strconv.Atoi(date[8:10])
+	if err != nil {
+		fmt.Println(err)
+	}
+	str := strconv.Itoa(y) + "年" + strconv.Itoa(m) + "月" + strconv.Itoa(d) + "日"
 	return str
 }
 
