@@ -1,8 +1,7 @@
 package data
 
-func JudgeExportApiDataFieldNumber(prefecture string) (name string, num int) {
-	name = prefecture
-	switch name {
+func JudgeExportApiDataFieldNumber(prefecture string) (num int) {
+	switch prefecture {
 	case "北海道":
 		num = 0
 	case "青森県":

@@ -1,11 +1,27 @@
 package data
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"original-covid-app-japan-prefecture-backend/client"
 	"reflect"
 	"strconv"
 )
+
+func initExportApiData() (data ExportApiData) {
+	exportApi := ExportApi{}
+	jsonFile, err := ioutil.ReadFile("../../api/data/exportApi.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = json.Unmarshal(jsonFile, &exportApi)
+	if err != nil {
+		fmt.Println(err)
+	}
+	data = exportApi.Data
+	return
+}
 
 func getExportApiDate(date string) string {
 	y, err := strconv.Atoi(date[0:4])
@@ -24,16 +40,15 @@ func getExportApiDate(date string) string {
 	return str
 }
 
-func getExportApiData(clientApi client.ClientApiData) ExportApiData {
-	data := ExportApiData{}
+func getExportApiData(clientApi client.ClientApiData) (data ExportApiData) {
+	data = initExportApiData()
 	uv := reflect.ValueOf(&data).Elem()
 	for _, value := range clientApi {
-		prefName, prefNum := JudgeExportApiDataFieldNumber(value.PrefName)
+		prefNum := JudgeExportApiDataFieldNumber(value.PrefName)
 		infoNum := JudgeExportApiInfoFieledNumber(value.FacilityType)
 		countNum := JudgeExportApiCountFieledNumber(value.AnsType)
 		count := uv.Field(prefNum).Field(infoNum).Field(countNum)
 		sum := count.Int() + 1
-		uv.Field(prefNum).Field(0).Field(0).SetString(prefName)
 		uv.Field(prefNum).Field(infoNum).Field(countNum).SetInt(sum)
 	}
 	return data
