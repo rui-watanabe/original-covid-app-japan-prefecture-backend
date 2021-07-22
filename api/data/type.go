@@ -1,4 +1,4 @@
-package api
+package data
 
 type ExportApiPrefectureInfo struct {
 	Name string `json:"name"`
