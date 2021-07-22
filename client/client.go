@@ -52,3 +52,15 @@ func (c Client) FetchClientApiData() (clientApiData ClientApiData) {
 	}
 	return clientApiData
 }
+
+func ReadClientApi() (clientApiData ClientApiData) {
+	jsonFile, err := ioutil.ReadFile("../../client/clientApi.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = json.Unmarshal(jsonFile, &clientApiData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}

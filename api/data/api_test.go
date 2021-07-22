@@ -1,47 +1,32 @@
 package data
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"original-covid-app-japan-prefecture-backend/client"
 	"testing"
 )
 
-func readClientApi() (clientApiData client.ClientApiData) {
-	jsonFile, err := ioutil.ReadFile("../../client/clientApi.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = json.Unmarshal(jsonFile, &clientApiData)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return
-}
-
 func TestGetExportApiDate(t *testing.T) {
-	clientApi := readClientApi()
+	clientApi := client.ReadClientApi()
 	arg := clientApi[0].SubmitDate
-	value := getExportApiDate(arg)
-	ans := "2021年4月2日"
-	if value != ans {
-		t.Errorf("%v != %v", value, ans)
+	date1 := getExportApiDate(arg)
+	date2 := "2021年4月2日"
+	if date1 != date2 {
+		t.Errorf("%v != %v", date1, date2)
 	}
 }
 
 func TestGetExportApiData(t *testing.T) {
-	clientApi := readClientApi()
+	clientApi := client.ReadClientApi()
 	exportApi := getExportApiData(clientApi)
-	prefName := exportApi.Hokkaido.PrefectureInfo.Name
-	ansPrefName := "北海道"
-	if prefName != ansPrefName {
-		t.Errorf("%v != %v", prefName, ansPrefName)
+	prefName1 := exportApi.Hokkaido.PrefectureInfo.Name
+	prefName2 := "北海道"
+	if prefName1 != prefName2 {
+		t.Errorf("%v != %v", prefName1, prefName2)
 	}
-	count := 1
-	ansCount := exportApi.Hokkaido.Hospitalize.Normal
-	if count != ansCount {
-		t.Errorf("%v != %v", count, ansCount)
+	count1 := 1
+	count2 := exportApi.Hokkaido.Hospitalize.Normal
+	if count1 != count2 {
+		t.Errorf("%v != %v", count1, count2)
 	}
 }
 
