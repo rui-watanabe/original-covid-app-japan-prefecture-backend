@@ -17,3 +17,11 @@ func TestJudgeExportApiInfoFieledNumber(t *testing.T) {
 		t.Errorf("%v != %v", n, v)
 	}
 }
+
+func TestJudgeExportApiCountFieledNumber(t *testing.T) {
+	n := 0
+	v := JudgeExportApiCountFieledNumber("通常")
+	if n != v {
+		t.Errorf("%v != %v", n, v)
+	}
+}
