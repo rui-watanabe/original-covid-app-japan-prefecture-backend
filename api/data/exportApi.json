@@ -14,11 +14,11 @@
         "unanswered": 0
       },
       "outPatient": {
-        "normal": 0,
-        "limit": 0,
-        "stopped": 0,
-        "unintroduced": 0,
-        "unanswered": 0
+        "normal": 1,
+        "limit": 2,
+        "stopped": 3,
+        "unintroduced": 4,
+        "unanswered": 5
       },
       "emergency": {
         "normal": 0,
