@@ -4,8 +4,8 @@ import (
 	"net/http"
 )
 
-func GetApiData() (clientApiData ClientApiData) {
+func GetApiData() (clientApi ClientApi) {
 	apiClient := NewClient(http.DefaultClient)
-	clientApiData = apiClient.FetchClientApiData()
+	clientApi = apiClient.FetchClientApi()
 	return
 }

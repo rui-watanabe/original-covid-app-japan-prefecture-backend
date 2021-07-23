@@ -6,7 +6,7 @@ import (
 	"original-covid-app-japan-prefecture-backend/client"
 )
 
-func StartServer(clientApiData client.ClientApiData) {
-	exportApiData := data.MakeApiJson(clientApiData)
+func StartServer(clientApi client.ClientApi) {
+	exportApiData := data.MakeApiJson(clientApi)
 	server.StartApiServer(exportApiData)
 }
