@@ -2,8 +2,8 @@ package data
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 	"original-covid-app-japan-prefecture-backend/client"
 	"os"
 	"reflect"
@@ -13,15 +13,15 @@ import (
 func InitExportApiData() (exportApi ExportApi, data ExportApiData) {
 	s := os.Getenv("GOPATH")
 	if s == "" {
-		fmt.Println("Not GOPATH")
+		log.Fatalln("Not GOPATH")
 	}
 	jsonFile, err := ioutil.ReadFile(s + "/src/original-covid-app-japan-prefecture-backend/api/data/exportApi.json")
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	err = json.Unmarshal(jsonFile, &exportApi)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	data = exportApi.Data
 	return
@@ -30,15 +30,15 @@ func InitExportApiData() (exportApi ExportApi, data ExportApiData) {
 func getExportApiDate(date string) string {
 	y, err := strconv.Atoi(date[0:4])
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	m, err := strconv.Atoi(date[5:7])
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	d, err := strconv.Atoi(date[8:10])
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	str := strconv.Itoa(y) + "年" + strconv.Itoa(m) + "月" + strconv.Itoa(d) + "日"
 	return str
