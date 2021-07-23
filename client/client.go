@@ -34,7 +34,8 @@ type ClientApi []struct {
 }
 
 func (c Client) FetchClientApi() (clientApi ClientApi) {
-	req, err := http.NewRequest("GET", "https://opendata.corona.go.jp/api/covid19DailySurvey", nil)
+	url := "https://opendata.corona.go.jp/api/covid19DailySurvey"
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatalln(err)
 	}
