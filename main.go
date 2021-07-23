@@ -7,7 +7,7 @@ import (
 
 func main() {
 	//クライアント
-	clientApiData := client.GetApiData()
+	clientApi := client.GetApiData()
 	//APIサーバー
-	api.StartServer(clientApiData)
+	api.StartServer(clientApi)
 }

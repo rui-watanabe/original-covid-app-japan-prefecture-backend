@@ -15,7 +15,7 @@ func NewClient(c *http.Client) Client {
 	return Client{c}
 }
 
-type ClientApiData []struct {
+type ClientApi []struct {
 	FacilityID   string `json:"facilityId"`
 	FacilityName string `json:"facilityName"`
 	ZipCode      string `json:"zipCode"`
@@ -32,7 +32,7 @@ type ClientApiData []struct {
 	FacilityCode string `json:"facilityCode"`
 }
 
-func (c Client) FetchClientApiData() (clientApiData ClientApiData) {
+func (c Client) FetchClientApi() (clientApi ClientApi) {
 	req, err := http.NewRequest("GET", "https://opendata.corona.go.jp/api/covid19DailySurvey", nil)
 	if err != nil {
 		fmt.Println(err)
@@ -46,19 +46,19 @@ func (c Client) FetchClientApiData() (clientApiData ClientApiData) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = json.Unmarshal(body, &clientApiData)
+	err = json.Unmarshal(body, &clientApi)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return clientApiData
+	return clientApi
 }
 
-func ReadClientApi() (clientApiData ClientApiData) {
+func ReadClientApi() (clientApi ClientApi) {
 	jsonFile, err := ioutil.ReadFile("../../client/clientApi.json")
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = json.Unmarshal(jsonFile, &clientApiData)
+	err = json.Unmarshal(jsonFile, &clientApi)
 	if err != nil {
 		fmt.Println(err)
 	}

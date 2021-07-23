@@ -44,7 +44,7 @@ func getExportApiDate(date string) string {
 	return str
 }
 
-func getExportApiData(clientApi client.ClientApiData) (data ExportApiData) {
+func getExportApiData(clientApi client.ClientApi) (data ExportApiData) {
 	_, data = InitExportApiData()
 	uv := reflect.ValueOf(&data).Elem()
 	for _, value := range clientApi {
