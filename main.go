@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"original-covid-app-japan-prefecture-backend/api"
 	"original-covid-app-japan-prefecture-backend/client"
 )

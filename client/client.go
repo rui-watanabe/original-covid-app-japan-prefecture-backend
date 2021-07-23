@@ -2,8 +2,8 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 )
@@ -36,20 +36,20 @@ type ClientApi []struct {
 func (c Client) FetchClientApi() (clientApi ClientApi) {
 	req, err := http.NewRequest("GET", "https://opendata.corona.go.jp/api/covid19DailySurvey", nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	res, err := c.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	err = json.Unmarshal(body, &clientApi)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	return clientApi
 }
@@ -57,15 +57,15 @@ func (c Client) FetchClientApi() (clientApi ClientApi) {
 func ReadClientApi() (clientApi ClientApi) {
 	s := os.Getenv("GOPATH")
 	if s == "" {
-		fmt.Println("Not GOPATH")
+		log.Fatalln("Not GOPATH")
 	}
 	jsonFile, err := ioutil.ReadFile(s + "/src/original-covid-app-japan-prefecture-backend/client/clientApi.json")
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	err = json.Unmarshal(jsonFile, &clientApi)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
 	return
 }
