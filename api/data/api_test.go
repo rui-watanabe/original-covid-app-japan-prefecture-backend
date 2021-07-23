@@ -31,7 +31,7 @@ func TestGetExportApiData(t *testing.T) {
 }
 
 func TestInitExportApiData(t *testing.T) {
-	data := initExportApiData()
+	_, data := InitExportApiData()
 	n1 := data.Hokkaido.OutPatient.Normal
 	n2 := 1
 	if n1 != n2 {

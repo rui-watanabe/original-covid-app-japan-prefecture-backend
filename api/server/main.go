@@ -6,9 +6,17 @@ import (
 	"original-covid-app-japan-prefecture-backend/api/data"
 )
 
-func StartApiServer(exportApiData data.ExportApi) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(exportApiData)
-	})
+func StartApiServer(exportApi data.ExportApi) {
+	http.HandleFunc("/", parseURL(topHandler, exportApi))
 	http.ListenAndServe(":8000", nil)
+}
+
+func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data data.ExportApi) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r, data)
+	}
+}
+
+func topHandler(w http.ResponseWriter, r *http.Request, exportApi data.ExportApi) {
+	json.NewEncoder(w).Encode(exportApi)
 }
