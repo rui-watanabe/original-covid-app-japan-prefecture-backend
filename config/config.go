@@ -2,7 +2,6 @@ package config
 
 import (
 	"log"
-	"original-covid-app-japan-prefecture-backend/utils"
 
 	"gopkg.in/ini.v1"
 )
@@ -14,12 +13,7 @@ type ConfigList struct {
 
 var Config ConfigList
 
-func init() {
-	LoadConfig()
-	utils.LoggingSettings(Config.LogFile)
-}
-
-func LoadConfig() {
+func LoadConfig() ConfigList {
 	cfg, err := ini.Load("config.ini")
 	if err != nil {
 		log.Fatalln(err)
@@ -29,4 +23,6 @@ func LoadConfig() {
 		Port:    cfg.Section("web").Key("port").MustString("8080"),
 		LogFile: cfg.Section("web").Key("logfile").String(),
 	}
+
+	return Config
 }

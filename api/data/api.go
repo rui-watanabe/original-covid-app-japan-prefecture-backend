@@ -10,12 +10,8 @@ import (
 	"strconv"
 )
 
-func InitExportApiData() (exportApi ExportApi, data ExportApiData) {
-	s := os.Getenv("GOPATH")
-	if s == "" {
-		log.Fatalln("Not GOPATH")
-	}
-	jsonFile, err := ioutil.ReadFile(s + "/src/original-covid-app-japan-prefecture-backend/api/data/exportApi.json")
+func InitExportApiData(path string) (exportApi ExportApi, data ExportApiData) {
+	jsonFile, err := ioutil.ReadFile(path + "/api/data/exportApi.json")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -45,7 +41,11 @@ func getExportApiDate(date string) string {
 }
 
 func getExportApiData(clientApi client.ClientApi) (data ExportApiData) {
-	_, data = InitExportApiData()
+	s, err := os.Getwd()
+	if err != nil {
+		log.Fatalln("Get Current Path Error")
+	}
+	_, data = InitExportApiData(s)
 	uv := reflect.ValueOf(&data).Elem()
 	for _, value := range clientApi {
 		prefNum := JudgeExportApiDataFieldNumber(value.PrefName)
