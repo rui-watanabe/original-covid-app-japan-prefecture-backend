@@ -1,33 +1,29 @@
 package data
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"original-covid-app-japan-prefecture-backend/client"
-	"os"
 	"testing"
 )
 
 func TestGetExportApiDate(t *testing.T) {
-	os.Chdir("../..")
-	s, err := os.Getwd()
-	if err != nil {
-		t.Errorf("Get Current Path Error")
-		return
-	}
-	clientApi := client.ClientApi{}
+	c := client.ClientApi{{
+		FacilityID:   "11111111",
+		FacilityName: "病院",
+		ZipCode:      "〒000-0000",
+		PrefName:     "北海道",
+		FacilityAddr: "金沢市桜町00の00",
+		FacilityTel:  "1111111111",
+		Latitude:     "11.111111",
+		Longitude:    "111.111111",
+		SubmitDate:   "2021-04-02",
+		FacilityType: "入院",
+		AnsType:      "通常",
+		LocalGovCode: "111111",
+		CityName:     "金沢市",
+		FacilityCode: "1111111111",
+	}}
 
-	jsonFile, err := ioutil.ReadFile(s + "/client/clientApi.json")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	err = json.Unmarshal(jsonFile, &clientApi)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	arg := clientApi[0].SubmitDate
+	arg := c[0].SubmitDate
 	date1 := getExportApiDate(arg)
 	date2 := "2021年4月2日"
 	if date1 != date2 {
@@ -37,25 +33,24 @@ func TestGetExportApiDate(t *testing.T) {
 }
 
 func TestGetExportApiData(t *testing.T) {
-	s, err := os.Getwd()
-	if err != nil {
-		t.Errorf("Get Current Path Error")
-		return
-	}
-	clientApi := client.ClientApi{}
+	c := client.ClientApi{{
+		FacilityID:   "11111111",
+		FacilityName: "病院",
+		ZipCode:      "〒000-0000",
+		PrefName:     "北海道",
+		FacilityAddr: "金沢市桜町00の00",
+		FacilityTel:  "1111111111",
+		Latitude:     "11.111111",
+		Longitude:    "111.111111",
+		SubmitDate:   "2021-04-02",
+		FacilityType: "入院",
+		AnsType:      "通常",
+		LocalGovCode: "111111",
+		CityName:     "金沢市",
+		FacilityCode: "1111111111",
+	}}
 
-	jsonFile, err := ioutil.ReadFile(s + "/client/clientApi.json")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	err = json.Unmarshal(jsonFile, &clientApi)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-
-	exportApi := getExportApiData(clientApi)
+	exportApi := getExportApiData(c)
 	prefName1 := exportApi.Hokkaido.PrefectureInfo.Name
 	prefName2 := "北海道"
 	if prefName1 != prefName2 {

@@ -1,33 +1,29 @@
 package data
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"original-covid-app-japan-prefecture-backend/client"
-	"os"
 	"testing"
 )
 
 func TestMakeApiJson(t *testing.T) {
-	s, err := os.Getwd()
-	if err != nil {
-		t.Errorf("Get Current Path Error")
-		return
-	}
-	clientApi := client.ClientApi{}
+	c := client.ClientApi{{
+		FacilityID:   "11111111",
+		FacilityName: "病院",
+		ZipCode:      "〒000-0000",
+		PrefName:     "北海道",
+		FacilityAddr: "金沢市桜町00の00",
+		FacilityTel:  "1111111111",
+		Latitude:     "11.111111",
+		Longitude:    "111.111111",
+		SubmitDate:   "2021-04-02",
+		FacilityType: "入院",
+		AnsType:      "通常",
+		LocalGovCode: "111111",
+		CityName:     "金沢市",
+		FacilityCode: "1111111111",
+	}}
 
-	jsonFile, err := ioutil.ReadFile(s + "/client/clientApi.json")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	err = json.Unmarshal(jsonFile, &clientApi)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-
-	data := MakeApiJson(clientApi)
+	data := MakeApiJson(c)
 
 	date1 := data.Date
 	date2 := "2021年4月2日"
