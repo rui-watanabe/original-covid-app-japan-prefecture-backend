@@ -5,19 +5,18 @@ WORKDIR /go/src/original-covid-app-japan-prefecture-backend
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY ./  ./
+COPY . .
 
 ARG CGO_ENABLED=0
 ARG GOOS=linux
 ARG GOARCH=amd64
 RUN go build \
-  -o /go/bin/original-covid-app-japan-prefecture-backend \
+  -o /go/bin/main \
   -ldflags '-s -w'
-
 
 FROM scratch as runner
 
-COPY --from=builder /go/bin/original-covid-app-japan-prefecture-backend /app/original-covid-app-japan-prefecture-backend
-COPY --from=builder /go/src/original-covid-app-japan-prefecture-backend/config.ini /app/config.ini
+COPY --from=builder /go/bin/main /app/main
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-ENTRYPOINT ["/app/original-covid-app-japan-prefecture-backend"]
+ENTRYPOINT ["/app/main"]
