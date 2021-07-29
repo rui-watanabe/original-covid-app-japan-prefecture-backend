@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 )
 
 type Client struct {
@@ -53,20 +52,4 @@ func (c Client) FetchClientApi() (clientApi ClientApi) {
 		log.Fatalln(err)
 	}
 	return clientApi
-}
-
-func ReadClientApi() (clientApi ClientApi) {
-	s := os.Getenv("GOPATH")
-	if s == "" {
-		log.Fatalln("Not GOPATH")
-	}
-	jsonFile, err := ioutil.ReadFile(s + "/src/original-covid-app-japan-prefecture-backend/client/clientApi.json")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	err = json.Unmarshal(jsonFile, &clientApi)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	return
 }

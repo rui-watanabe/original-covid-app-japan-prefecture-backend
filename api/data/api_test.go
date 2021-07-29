@@ -6,59 +6,61 @@ import (
 )
 
 func TestGetExportApiDate(t *testing.T) {
-	clientApi := client.ReadClientApi()
-	arg := clientApi[0].SubmitDate
+	c := client.ClientApi{{
+		FacilityID:   "11111111",
+		FacilityName: "病院",
+		ZipCode:      "〒000-0000",
+		PrefName:     "北海道",
+		FacilityAddr: "金沢市桜町00の00",
+		FacilityTel:  "1111111111",
+		Latitude:     "11.111111",
+		Longitude:    "111.111111",
+		SubmitDate:   "2021-04-02",
+		FacilityType: "入院",
+		AnsType:      "通常",
+		LocalGovCode: "111111",
+		CityName:     "金沢市",
+		FacilityCode: "1111111111",
+	}}
+
+	arg := c[0].SubmitDate
 	date1 := getExportApiDate(arg)
 	date2 := "2021年4月2日"
 	if date1 != date2 {
 		t.Errorf("%v != %v", date1, date2)
+		return
 	}
 }
 
 func TestGetExportApiData(t *testing.T) {
-	clientApi := client.ReadClientApi()
-	exportApi := getExportApiData(clientApi)
+	c := client.ClientApi{{
+		FacilityID:   "11111111",
+		FacilityName: "病院",
+		ZipCode:      "〒000-0000",
+		PrefName:     "北海道",
+		FacilityAddr: "金沢市桜町00の00",
+		FacilityTel:  "1111111111",
+		Latitude:     "11.111111",
+		Longitude:    "111.111111",
+		SubmitDate:   "2021-04-02",
+		FacilityType: "入院",
+		AnsType:      "通常",
+		LocalGovCode: "111111",
+		CityName:     "金沢市",
+		FacilityCode: "1111111111",
+	}}
+
+	exportApi := getExportApiData(c)
 	prefName1 := exportApi.Hokkaido.PrefectureInfo.Name
 	prefName2 := "北海道"
 	if prefName1 != prefName2 {
 		t.Errorf("%v != %v", prefName1, prefName2)
+		return
 	}
 	count1 := 1
 	count2 := exportApi.Hokkaido.Hospitalize.Normal
 	if count1 != count2 {
 		t.Errorf("%v != %v", count1, count2)
-	}
-}
-
-func TestInitExportApiData(t *testing.T) {
-	_, data := InitExportApiData()
-	n1 := data.Hokkaido.OutPatient.Normal
-	n2 := 1
-	if n1 != n2 {
-		t.Errorf("%v != %v", n1, n2)
-	}
-
-	l1 := data.Hokkaido.OutPatient.Limit
-	l2 := 2
-	if l1 != l2 {
-		t.Errorf("%v != %v", l1, l2)
-	}
-
-	s1 := data.Hokkaido.OutPatient.Stopped
-	s2 := 3
-	if s1 != s2 {
-		t.Errorf("%v != %v", s1, s2)
-	}
-
-	ui1 := data.Hokkaido.OutPatient.Unintroduced
-	ui2 := 4
-	if ui1 != ui2 {
-		t.Errorf("%v != %v", ui1, ui2)
-	}
-
-	ua1 := data.Hokkaido.OutPatient.Unanswered
-	ua2 := 5
-	if ua1 != ua2 {
-		t.Errorf("%v != %v", ua1, ua2)
+		return
 	}
 }

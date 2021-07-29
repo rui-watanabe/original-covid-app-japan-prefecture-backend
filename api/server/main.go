@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 	"original-covid-app-japan-prefecture-backend/api/data"
-	"original-covid-app-japan-prefecture-backend/config"
+	// "original-covid-app-japan-prefecture-backend/config"
 )
 
 func StartApiServer(exportApi data.ExportApi) {
 	http.HandleFunc("/", parseURL(topHandler, exportApi))
-	http.ListenAndServe(":"+string(config.Config.Port), nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data data.ExportApi) http.HandlerFunc {

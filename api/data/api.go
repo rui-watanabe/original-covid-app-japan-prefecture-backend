@@ -1,31 +1,19 @@
 package data
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"log"
 	"original-covid-app-japan-prefecture-backend/client"
-	"os"
 	"reflect"
 	"strconv"
 )
 
-func InitExportApiData() (exportApi ExportApi, data ExportApiData) {
-	s := os.Getenv("GOPATH")
-	if s == "" {
-		log.Fatalln("Not GOPATH")
-	}
-	jsonFile, err := ioutil.ReadFile(s + "/src/original-covid-app-japan-prefecture-backend/api/data/exportApi.json")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	err = json.Unmarshal(jsonFile, &exportApi)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	data = exportApi.Data
-	return
-}
+var prefNameArray = [47]string{"北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
+	"茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+	"新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県",
+	"静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県",
+	"奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県",
+	"徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県",
+	"熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"}
 
 func getExportApiDate(date string) string {
 	y, err := strconv.Atoi(date[0:4])
@@ -45,8 +33,10 @@ func getExportApiDate(date string) string {
 }
 
 func getExportApiData(clientApi client.ClientApi) (data ExportApiData) {
-	_, data = InitExportApiData()
 	uv := reflect.ValueOf(&data).Elem()
+	for index, pref := range prefNameArray {
+		uv.Field(index).Field(0).Field(0).SetString(pref)
+	}
 	for _, value := range clientApi {
 		prefNum := JudgeExportApiDataFieldNumber(value.PrefName)
 		infoNum := JudgeExportApiInfoFieledNumber(value.FacilityType)
