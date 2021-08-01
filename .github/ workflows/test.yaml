@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.14.4
+
+    - name: Install dependent packages
+      run: go mod download
+
+    - name: Run all test
+      run: go test -v ./...
