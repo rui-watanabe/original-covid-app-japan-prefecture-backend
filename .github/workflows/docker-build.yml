@@ -6,7 +6,6 @@ on:
 
 jobs:
   docker-build:
-    needs: ["test"]
     runs-on: ubuntu-18.04
     env:
       DOCKER_IMAGE_NAME: original-covid-app-backend
