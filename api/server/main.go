@@ -9,7 +9,7 @@ import (
 
 func StartApiServer(exportApi data.ExportApi) {
 	http.HandleFunc("/", parseURL(topHandler, exportApi))
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":5000", nil)
 }
 
 func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data data.ExportApi) http.HandlerFunc {
