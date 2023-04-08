@@ -1,3 +1,3 @@
 [build]
-  command = "mkdir -p /opt/build/repo && GOOS=linux GOARCH=amd64 go build -o /opt/build/repo/main && echo '/* /index.html 200' > /opt/build/repo/_redirects"
+  command = "mkdir -p /opt/build/repo &&　mkdir -p /opt/build/repo/_redirects && GOOS=linux GOARCH=amd64 go build -o /opt/build/repo/main && echo '/* /index.html 200' > /opt/build/repo/_redirects"
   publish = "/opt/build/repo"
