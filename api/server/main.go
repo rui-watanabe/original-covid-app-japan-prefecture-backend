@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"original-covid-app-japan-prefecture-backend/api/data"
 	// "original-covid-app-japan-prefecture-backend/config"
@@ -9,7 +10,7 @@ import (
 
 func StartApiServer(exportApi data.ExportApi) {
 	http.HandleFunc("/", parseURL(topHandler, exportApi))
-	http.ListenAndServe(":80", nil)
+	log.Fatal(http.ListenAndServe(":5000", nil))
 }
 
 func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data data.ExportApi) http.HandlerFunc {
