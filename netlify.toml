@@ -1,2 +1,2 @@
 [build]
-  command = "GOOS=linux GOARCH=amd64 go build && ./original-covid-app-japan-prefecture-backend"
+  command = "GOOS=linux GOARCH=amd64 go build"
