@@ -1,3 +1,8 @@
 [build]
-  command = "GOOS=linux GOARCH=amd64 go build -o main"
+  command = "GOOS=linux GOARCH=amd64 go build -o /opt/build/repo/main"
   publish = "/opt/build/repo"
+
+[[redirects]]
+  from = "/opt/build/repo/data.json"
+  to = "/opt/build/repo/data.json"
+  status = 200

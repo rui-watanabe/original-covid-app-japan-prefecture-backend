@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"original-covid-app-japan-prefecture-backend/api/data"
@@ -21,4 +22,6 @@ func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data 
 
 func topHandler(w http.ResponseWriter, r *http.Request, exportApi data.ExportApi) {
 	json.NewEncoder(w).Encode(exportApi)
+	file, _ := json.MarshalIndent(exportApi, "", " ")
+	_ = ioutil.WriteFile("opt/build/repo/data.json", file, 0644)
 }
