@@ -11,6 +11,7 @@ import (
 
 func StartApiServer(exportApi data.ExportApi) {
 	http.HandleFunc("/", parseURL(topHandler, exportApi))
+	print("hogehoge")
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
 
