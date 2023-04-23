@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"original-covid-app-japan-prefecture-backend/api/data"
@@ -9,8 +10,14 @@ import (
 )
 
 func StartApiServer(exportApi data.ExportApi) {
+	mux := http.NewServeMux()
 	http.HandleFunc("/", parseURL(topHandler, exportApi))
-	log.Fatal(http.ListenAndServe(":5000", nil))
+
+	// CORS レスポンスヘッダーの追加
+	c := cors.Default()
+	handler := c.Handler(mux)
+
+	log.Fatal(http.ListenAndServe(":5000", handler))
 }
 
 func parseURL(fn func(http.ResponseWriter, *http.Request, data.ExportApi), data data.ExportApi) http.HandlerFunc {
