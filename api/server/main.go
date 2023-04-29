@@ -11,7 +11,7 @@ import (
 
 func StartApiServer(exportApi data.ExportApi) {
 	mux := http.NewServeMux()
-	http.HandleFunc("/", parseURL(topHandler, exportApi))
+	mux.HandleFunc("/", parseURL(topHandler, exportApi))
 
 	// CORS レスポンスヘッダーの追加
 	c := cors.Default()
