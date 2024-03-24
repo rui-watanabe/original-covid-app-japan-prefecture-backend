@@ -40,16 +40,22 @@ func (c Client) FetchClientApi() (clientApi ClientApi) {
 	}
 	res, err := c.Do(req)
 	if err != nil {
-		log.Fatalln(err)
+		err = json.Unmarshal(clientData, &clientApi)
+		if err != nil {
+			log.Fatalln(err, "a")
+		} else {
+			return clientApi
+		}
+		log.Fatalln(err, clientApi)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err, "c")
 	}
 	err = json.Unmarshal(body, &clientApi)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err, "d")
 	}
 	return clientApi
 }
